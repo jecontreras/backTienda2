@@ -104,9 +104,11 @@ Procedures.fechasDisponibles = async  ( req, res)=>{
 	let resultado = Object();
 	fecha.tz('America/Bogota').format('ha z');  // 5am PDT
 	fecha = new moment(fecha).format('DD');
+	console.log( "*****************", params );
 	if(Number(fecha) >=12 && Number(fecha) <= 15) return res.ok({status:200, data:true})
 	if(Number(fecha) >=27 && Number(fecha) <= 30) return res.ok({status:200, data:true})
 	resultado = await Tblventas.findOne({usu_clave_int: params.user, ven_estado: 0 });
+	console.log("++++++++++++++++", resultado)
 	if(resultado) return res.ok({status:200, data: false, mensaje: "Tienes un retiro en estado pendiente mas informacion al servicio al cliente +573148487506"});
 	return res.ok({status:200, data:false})
 	

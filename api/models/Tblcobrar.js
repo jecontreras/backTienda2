@@ -61,6 +61,9 @@ module.exports = {
     cob_sw_eliminado:{
         type: 'string'
     },
+    fotoPago:{
+        type: 'string'
+    }
   },
 
 };

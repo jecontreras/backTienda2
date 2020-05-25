@@ -12,6 +12,13 @@ module.exports = {
     titulo:{
       type: 'string'
     },
+    foto: {
+      type: 'string'
+    },
+    tipoDe:{
+      type: 'integer',
+      defaultsTo: 0 // 0 ventas // 1 retiros
+    },
     descripcion:{
       type: 'string'
     },
