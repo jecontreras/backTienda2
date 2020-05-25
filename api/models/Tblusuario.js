@@ -144,6 +144,9 @@ module.exports = {
     porcentaje:{
         type: 'integer',
         defaultsTo: 7.777
+    },
+    empresa:{
+        model: 'empresa'
     }
   },
     customToJSON: function(){

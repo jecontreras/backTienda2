@@ -35,10 +35,20 @@ Procedures.register = async(req, res)=>{
   params.codigo = codigo();
   params.nivel = await NivelServices.getNivel();
   params.nivel = params.nivel.id;
+  // Buscando la cabeza o la persona que lo refirio
+  params.empresa = await Procedures.getCabeza( params );
   user = await Tblusuario.create(params).fetch();
   if(!user) return res.badRequest(err);
   user = await Tblusuario.findOne({id: user.id}).populate('usu_perfil').populate('cabeza');
   return res.ok({status: 200, 'success': true, data: user});
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Procedures.getCabeza = async( data ) =>{
+  let resultado = Object();
+  resultado = await Tblusuario.findOne({ id: data.cabeza });
+  if( !resultado ) return 1;
+  return resultado.empresa || 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,9 +116,10 @@ Procedures.querys = async (req, res)=>{
     console.log("***", params);
 	resultado = await QuerysServices(Tblusuario, params);
 	for(let row of resultado.data){
-    row.usu_perfil = await Tblperfil.findOne({ id: row.usu_perfil });
-    row.nivel = await Categorias.findOne({ id: row.nivel });
-    row.cabeza = await Tblusuario.findOne({ id: row.cabeza });
+    if( row.usu_perfil )row.usu_perfil = await Tblperfil.findOne({ id: row.usu_perfil });
+    if( row.nivel ) row.nivel = await Categorias.findOne({ id: row.nivel });
+    if( row.cabeza ) row.cabeza = await Tblusuario.findOne({ id: row.cabeza });
+    if( row.empresa ) row.empresa = await Empresa.findOne({ id: row.empresa });
 	}
 	return res.ok(resultado);
 }
