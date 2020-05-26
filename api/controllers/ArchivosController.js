@@ -25,7 +25,7 @@ Procedures.file = async(req, res)=>{
       bucket: 'publihazclick/locompro'
     }, async (err, filesUploaded) => {
         if (err) return res.serverError(err);
-        console.log(filesUploaded)
+        // console.log(filesUploaded)
         return res.ok({
             status: 200,
             files: "https://s3.amazonaws.com/publihazclick/locompro/"+filesUploaded[0].fd,

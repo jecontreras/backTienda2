@@ -9,7 +9,7 @@ let Procedures = Object();
 Procedures.querys = async (req, res)=>{
 	let params = req.allParams();
     let resultado = Object();
-    console.log("***", params);
+    // console.log("***", params);
 	resultado = await QuerysServices(Tblcategorias, params);
 	for(let row of resultado.data){
 		row.cat_padre = await Tblcategorias.findOne( { where:{ id: row.cat_padre }} );

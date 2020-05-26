@@ -113,7 +113,7 @@ Procedures.cambioPass = async (req, res)=>{
 Procedures.querys = async (req, res)=>{
 	let params = req.allParams();
     let resultado = Object();
-    console.log("***", params);
+    // console.log("***", params);
 	resultado = await QuerysServices(Tblusuario, params);
 	for(let row of resultado.data){
     if( row.usu_perfil )row.usu_perfil = await Tblperfil.findOne({ id: row.usu_perfil });
