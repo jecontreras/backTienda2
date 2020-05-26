@@ -18,5 +18,12 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
+  '*': ['tenant'],
+  'tblusuario/register': true,
+  'tblusuario/login': true,
+  'tblproductos/querys': true,
+  'notificaciones/querys': true,
+  'tblcategorias/querys': true,
+  'tbltestimonio/querys': true
 
 };

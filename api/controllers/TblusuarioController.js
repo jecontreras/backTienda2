@@ -9,6 +9,21 @@ var Passwords = require('machinepack-passwords');
 const _ = require('lodash');
 const moment = require('moment');
 let Procedures = Object();
+var jwt = require('jsonwebtoken');
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Procedures.creacionTokens = async( data )=>{
+  let tokenData = {
+    username: data.usu_email,
+    id: data.id
+  };
+  return new Promise( async( resolve ) => {
+    let token = jwt.sign( tokenData, 'Secret Password', { expiresIn: 60 * 60 * 24 /*expires in 24 hours */ });
+    await Cache.guardar( { user: data.id, rol: data.usu_perfil, tokens: token } );
+    return resolve( token );
+  })
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Procedures.register = async(req, res)=>{
@@ -40,6 +55,8 @@ Procedures.register = async(req, res)=>{
   user = await Tblusuario.create(params).fetch();
   if(!user) return res.badRequest(err);
   user = await Tblusuario.findOne({id: user.id}).populate('usu_perfil').populate('cabeza');
+  let tokens = await Procedures.creacionTokens( user );
+  user.tokens = tokens;
   return res.ok({status: 200, 'success': true, data: user});
 }
 
@@ -84,9 +101,11 @@ Procedures.login = async function(req, res){
             incorrect: function () {
                 return res.send({'success': false,'message': 'Contraseña incorrecta'});
             },
-            success: function () {
+            success: async function () {
                 user.password = '';
                 sails.log('User '+ user.id +' has logged in.');
+                let tokens = await Procedures.creacionTokens( user );
+                user.tokens = tokens;
                 return res.send({
                 'success': true,
                 'message': 'Peticion realizada',
