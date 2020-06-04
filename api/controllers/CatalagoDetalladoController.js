@@ -11,6 +11,9 @@ Procedures.querys = async (req, res)=>{
     let resultado = Object();
     // console.log("***", params);
 	resultado = await QuerysServices(CatalagoDetallado, params);
+	for( let row of resultado.data ){
+		if( row.producto ) row.producto = await Tblproductos.findOne({ id: row.producto });
+	}
 	return res.ok(resultado);
 }
 module.exports = Procedures;
