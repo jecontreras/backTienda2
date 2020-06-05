@@ -17,13 +17,13 @@ Procedures.querys = async (req, res)=>{
 		if( row.producto ) {
 			row.producto = await Tblproductos.findOne({ id: row.producto });
 			if( row.producto ) { 
-				base = await Procedures.FormatoBase64( row.producto.foto );
-				row.base64 = base;
+				// base = await Procedures.FormatoBase64( row.producto.foto );
+				// row.base64 = base;
 			}
 		}
 		if( row.foto ){
-			base = await Procedures.FormatoBase64( row.foto );
-			row.base64 = base;
+			// base = await Procedures.FormatoBase64( row.foto );
+			// row.base64 = base;
 			row.producto = {
 				foto: row.foto
 			}
@@ -32,12 +32,13 @@ Procedures.querys = async (req, res)=>{
 	return res.ok(resultado);
 }
 
-Procedures.FormatoBase64 = ( foto )=>{
-	return new Promise( resolve=>{
-		base64Img.requestBase64(foto, function(err, res, body) {
-			// console.log("********", res, body);
-			resolve( body );
-		});
+Procedures.FormatoBase64 = ( req, res )=>{
+	let foto = req.allParams();
+	foto = foto.foto;
+	base64Img.requestBase64(foto, function(err, rese, body) {
+		// console.log("********", res, body);
+		return res.status(200).send( { status:200, data: body });
 	});
 }
+
 module.exports = Procedures;
