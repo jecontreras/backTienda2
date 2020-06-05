@@ -15,6 +15,9 @@ module.exports = {
     producto:{
       model: 'tblproductos'
     },
+    foto:{
+      type: 'string'
+    },
     estado:{
       type: 'integer' // 0 activo, 2 inactivo
     }
