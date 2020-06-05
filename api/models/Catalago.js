@@ -14,6 +14,12 @@ module.exports = {
     },
     estado:{
       type: 'integer' // 0 activo, 2 inactivo
+    },
+    precio:{
+      type: 'integer'
+    },
+    preciomayor:{
+      type: 'integer'
     }
   },
 
