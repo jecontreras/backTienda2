@@ -15,11 +15,17 @@ Procedures.querys = async (req, res)=>{
 	resultado = await QuerysServices(CatalagoDetallado, params);
 	for( let row of resultado.data ){
 		if( row.producto ) {
-			let producto = await Tblproductos.findOne({ id: row.producto });
-			row.producto = producto;
+			row.producto = await Tblproductos.findOne({ id: row.producto });
 			if( row.producto ) { 
 				base = await Procedures.FormatoBase64( row.producto.foto );
 				row.base64 = base;
+			}
+		}
+		if( row.foto ){
+			base = await Procedures.FormatoBase64( row.foto );
+			row.base64 = base;
+			row.producto = {
+				foto: row.foto
 			}
 		}
 	}
