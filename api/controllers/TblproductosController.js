@@ -21,5 +21,14 @@ Procedures.querys = async (req, res)=>{
 	}
 	return res.ok(resultado);
 }
+
+Procedures.ordenar = async ( req, res )=>{
+	let params = req.allParams();
+	let resultado = Object();
+	params.lista = params.lista.reverse();
+	for( let row of params.lista ) resultado = await Tblproductos.update( { id: row.id }, { createdAt: new Date() });
+	return res.status(200).send( { status:200, data: "Ordenado exitoso" });
+}
+
 module.exports = Procedures;
 
