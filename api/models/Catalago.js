@@ -20,6 +20,9 @@ module.exports = {
     },
     preciomayor:{
       type: 'integer'
+    },
+    descargar: {
+      type: 'boolean', defaultsTo: false,
     }
   },
 
