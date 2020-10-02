@@ -19,6 +19,10 @@ module.exports = {
       type: 'integer',
       defaultsTo: 0 // 0 ventas // 1 retiros
     },
+    admin:{
+      type: 'integer',
+      defaultsTo: 0
+    },
     descripcion:{
       type: 'string'
     },
