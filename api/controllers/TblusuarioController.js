@@ -38,8 +38,6 @@ Procedures.register = async(req, res)=>{
   let password = await Procedures.encryptedPassword(params.usu_clave);
   if(!password) return res.serverError("password Error");
   params.usu_clave = password;
-    //   Codigo
-  function codigo(){return (Date.now().toString(36).substr(2, 3) + Math.random().toString(36).substr(2, 2)).toUpperCase();}
     //   Rol
   let rol = await Tblperfil.findOne({prf_descripcion: params.rol || "vendedor"});
   if(!rol) {
@@ -57,8 +55,13 @@ Procedures.register = async(req, res)=>{
   user = await Tblusuario.findOne({id: user.id}).populate('usu_perfil').populate('cabeza');
   let tokens = await Procedures.creacionTokens( user );
   user.tokens = tokens;
+  let resul = await MensajeService.envios( { subtitulo: "Bienvenido a la plataforma LocomproAqui.com Usuario "+ user.usu_email +"! satisfecho el registro", emails: user.usu_email, creado: "123456", descripcion: "Espero que disfrutes trabajar con nuestra plataforma" });
   return res.ok({status: 200, 'success': true, data: user});
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   Codigo
+function codigo(){return (Date.now().toString(36).substr(2, 3) + Math.random().toString(36).substr(2, 2)).toUpperCase();}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Procedures.getCabeza = async( data ) =>{
@@ -183,6 +186,23 @@ Procedures.guardarPunto = async(req, res)=>{
   if(!user) return res.status(400).send({ status:400, data: "Error de Usuario no Encontrado"});
   resultado = await NivelServices.procesoGanacias( user, { id: 1, ven_ganancias: params.ganancias }, { valor: 100 } );
   return res.status(200).send( { status:200, data:"ok" });
+}
+
+Procedures.resetiar = async( req, res )=>{
+  let params = req.allParams();
+  let resultado = Object();
+  console.log("***********", params);
+  if( !params.usu_email ) return res.status( 400 ).send( { data: "Error email undefined" } );
+  resultado = await Tblusuario.findOne( { usu_email: params.usu_email });
+  if( !resultado ) return res.status( 400 ).send( { data: "Usuario no encontrado" } );
+  let codigos = codigo()
+  let password = await Procedures.encryptedPassword( codigos );
+  if ( !password ) return res.ok({ status: 400, data: "password Error" });
+  
+  let msx = await MensajeService.envios( { subtitulo: "LocomproAqui.com Contraseña nueva", emails: params.usu_email, creado: "123456", descripcion: "Estimado usuario esta es la contraseña nueva para volver a entrar al admin de nuestra plataforma contraseña: " + codigos } );
+
+  resultado = await Tblusuario.update( { id: resultado.id }, {  usu_clave: password } );
+  return res.status( 200 ).send( { data: "Completado" } );
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
