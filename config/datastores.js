@@ -50,7 +50,8 @@ module.exports.datastores = {
     ***************************************************************************/
      adapter: 'sails-mysql',
     //  url: 'mysql://jose:123456@locomproaqui.com/dls2',
-     url: 'mysql://nqxs2fpfdpulm0og:zgo7fpgbdywemgun@qbhol6k6vexd5qjs.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/qplym362m5dnl53e',
+    //  url: 'mysql://nqxs2fpfdpulm0og:zgo7fpgbdywemgun@qbhol6k6vexd5qjs.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/qplym362m5dnl53e',
+      url: "mysql://t9ull4p9xvnutg39:wf0hp2qz5pr3nbbd@dt3bgg3gu6nqye5f.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/fimba1cmrov1sao8"
      //url: 'mysql://root:@localhost/dls4',
 
   },

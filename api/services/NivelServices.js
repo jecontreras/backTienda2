@@ -7,7 +7,7 @@ Procedures.nivelUser = async ( data )=>{
     //if(params.where) params = params.where;
     if( !params.id ) return {};
     let resultado = Object();
-    let countUser = Number();
+    let countUser = Number(0);
     // consulta el usuario
     let user = await Tblusuario.findOne({ id: params.id }).populate('nivel');
     // Buscar el nivel primero jade
@@ -17,12 +17,13 @@ Procedures.nivelUser = async ( data )=>{
     for(let row of resultado){
       countUser+= await Procedures.validarNivel(row);
     }
-    //console.log("************",user);
+    // console.log("************",user, countUser );
     if( !user.nivel ) { user.nivel = nivel; await Procedures.asignandoleNivel(user, countUser); }
     if( !user.nivel.id ) await Procedures.asignandoleNivel(user, countUser);
     else {
   
       let miNivelProx = await Procedures.getMiNivel( countUser );
+      // console.log( "*************+222222222", miNivelProx )
       user.nivel = miNivelProx;
       await Procedures.asignandoleNivel(user);
       
@@ -34,7 +35,7 @@ Procedures.nivelUser = async ( data )=>{
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 Procedures.getMiNivel = async( countUser )=>{
   let resultado = await Categorias.find( { where:{ invitados: { '>=': 0,'<=': countUser } }, sort: 'invitados DESC' } );
-  //console.log("**** mi nivel", resultado);
+  // console.log("**** mi nivel", resultado, countUser);
   return resultado[0];
 
 }

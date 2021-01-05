@@ -17,21 +17,25 @@ Procedures.file = async(req, res)=>{
       uploadFiles = (uploadFiles.split("images"))[1];
       res.ok('images'+uploadFiles);
     });*/
-
-    req.file('file').upload({
-      adapter: skipper,
-      key: 'AKIAIODH7ZEL3C6GG3AA',
-      secret: '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',
-      bucket: 'publihazclick/locompro'
-    }, async (err, filesUploaded) => {
-        if (err) return res.serverError(err);
-        // console.log(filesUploaded)
-        return res.ok({
-            status: 200,
-            files: "https://s3.amazonaws.com/publihazclick/locompro/"+filesUploaded[0].fd,
-            textParams: req.allParams()
-        });
+    return res.ok({
+        status: 200,
+        files: "https://i.postimg.cc/G2D8pVg3/018c0b26-4206-433c-8cef-943d3426e550.jpg",
+        textParams: req.allParams()
     });
+    // req.file('file').upload({
+    //   adapter: skipper,
+    //   key: 'AKIAIODH7ZEL3C6GG3AA',
+    //   secret: '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',
+    //   bucket: 'publihazclick/locompro'
+    // }, async (err, filesUploaded) => {
+    //     if (err) return res.serverError(err);
+    //     // console.log(filesUploaded)
+    //     return res.ok({
+    //         status: 200,
+    //         files: "https://s3.amazonaws.com/publihazclick/locompro/"+filesUploaded[0].fd,
+    //         textParams: req.allParams()
+    //     });
+    // });
 
     /*req.file('file').upload({
         //dirname: require('path').resolve(sails.config.appPath, 'assets/images')
