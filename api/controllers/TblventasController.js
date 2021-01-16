@@ -19,6 +19,33 @@ Procedures.querys = async (req, res)=>{
 	return res.ok(resultado);
 }
 
+Procedures.create = async( req, res )=>{
+	let params = req.allParams();
+	let resultado = Object();
+	let artiuclos = params.listaArticulo;
+	params = _.omit( params, ['listaArticulo']);
+	resultado = await Tblventas.create( params ).fetch();
+	for( let row of artiuclos ){
+		let result = await Procedures.registroArticulo( {
+			producto: row.articulo,
+			titulo: row.titulo,
+			precio: row.costo,
+			cantidad: row.cantidad,
+			comision: row.comision,
+			ventas: resultado.precio,
+			tallaSelect: row.tallaSelect
+		});
+	}
+	resultado = await Tblventas.findOne( { where: { id: resultado.id } } ).populate("usu_clave_int").populate("pro_clave_int").populate("ven_usu_actualiz").populate("ven_empresa");
+	return res.status( 200 ).send( resultado );
+}
+
+Procedures.registroArticulo = async( data ) => {
+	let resultado = Object();
+	resultado = await Tblventasproducto.create( data ).fetch();
+	return resultado;
+}
+
 // Procedures.update = async ( req, res)=>{
 // 	let  params = req.allParams();
 // 	let resultado = Object();

@@ -48,8 +48,7 @@ module.exports = {
         type: 'number'
     },
     ven_precio:{
-        type: 'integer',
-        required: true
+        type: 'integer'
     },
     ven_total:{
         type: 'integer',
