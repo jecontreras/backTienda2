@@ -9,7 +9,6 @@ let Procedures = Object();
 Procedures.querys = async (req, res)=>{
 	let params = req.allParams();
     let resultado = Object();
-    console.log("***", params);
 	resultado = await QuerysServices(Tbltallas, params);
 	return res.ok(resultado);
 }

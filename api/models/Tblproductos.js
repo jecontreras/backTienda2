@@ -112,6 +112,9 @@ module.exports = {
     },
     listPrecios:{
         type: 'json'
+    },
+    listaTallas:{
+        type: 'json'
     }
 
 

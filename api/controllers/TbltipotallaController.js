@@ -11,6 +11,9 @@ Procedures.querys = async (req, res)=>{
     let resultado = Object();
     // console.log("***", params);
 	resultado = await QuerysServices(Tbltipotalla, params);
+	for( let row of resultado.data ){
+		row.lista = await Tbltallas.find( { tal_tipo: row.id } );
+	}
 	return res.ok(resultado);
 }
 module.exports = Procedures;
