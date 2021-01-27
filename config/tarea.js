@@ -20,7 +20,7 @@ module.exports.tarea = async function() {
         process.exit(0)
         
     }
-    cron.AgregarTarea(tarea)
+    //cron.AgregarTarea(tarea)
 
     
     tarea        = new Object()
@@ -37,7 +37,7 @@ module.exports.tarea = async function() {
             process.exit(0)
         }
     }
-    cron.AgregarTarea(tarea)
+//    cron.AgregarTarea(tarea)
 
 
     cron.iniciar()
