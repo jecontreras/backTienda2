@@ -35,7 +35,7 @@ Procedures.nivelUser = async ( data )=>{
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 Procedures.getMiNivel = async( countUser )=>{
   let resultado = await Categorias.find( { where:{ invitados: { '>=': 0,'<=': countUser } }, sort: 'invitados DESC' } );
-  // console.log("**** mi nivel", resultado, countUser);
+  //console.log("**** mi nivel", resultado, countUser);
   return resultado[0];
 
 }

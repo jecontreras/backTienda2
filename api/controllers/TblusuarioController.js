@@ -47,6 +47,7 @@ Procedures.register = async(req, res)=>{
   params.usu_perfil = rol.id;
   params.codigo = codigo();
   params.nivel = await NivelServices.getNivel();
+  console.log("***", params.nivel)
   params.nivel = params.nivel.id;
   // Buscando la cabeza o la persona que lo refirio
   params.empresa = await Procedures.getCabeza( params );
